@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/profile/<username>', views.ProfileViewSet.as_view()),
     path('api/filter/generate', views.FilterPostViewSet.as_view()),
+    path('api/filter/response', views.FilterGetViewSet.as_view()),
 ]
