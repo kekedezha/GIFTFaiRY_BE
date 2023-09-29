@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import openai
+import os
+from dotenv import load_dotenv
 # import environ
 
 # Create your models here.
@@ -25,17 +27,20 @@ class Filter(models.Model):
         return str(self.id)
 
     def send_filters(self):
+        # Load environment variables from a .env file in the current directory
+        load_dotenv()
         filters_input = f'Give the user 10 ideas for a gift, consider these parameters which describe the person they are buying the gift for: {self.age}, {self.gender}, {self.relationship}, {self.price_range}, {self.occasion}, {self.gift_type}, {self.interest}.'
         # env = environ.Env()
         # environ.Env.read_env()
         MODEL = "gpt-3.5-turbo"
-        openai.api_key = env.OPENAI_API_KEY
+        openai.api_key = os.getenv('OPENAI_API_KEY')
         response = openai.ChatCompletion.create(
             model=MODEL,
             messages=[
                 {"role": "system",
                     "content": "You are a helpful assistant"},
-                {"role": "user", "content": filters_input}
+                {"role": "user", 
+                 "content": filters_input}
             ],
             temperature=0.8,
         )
