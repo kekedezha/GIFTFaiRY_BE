@@ -22,9 +22,43 @@ class Filter(models.Model):
     interest = models.CharField(max_length=300)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
+    item_title_array = []
+    item_descrip_array = []
+    openai_descrip_array = []
 
     def __str__(self):
         return str(self.id)
+    
+    def parsingFunc(self, string1):
+        #Parsed output_text response to initial array that will be used for further parsing
+        parsedArray = str(string1).split("\n\n")
+        items_and_descrip_Array = []
+        
+        #Appending openAI general description of responses
+        self.openai_descrip_array.append(parsedArray[0])
+        self.openai_descrip_array.append(parsedArray[0])  
+
+        #Get rid of first and last item of intial array that contains openAI general description of responses already stored in separate array above
+        parsedArray.pop(0)
+        parsedArray.pop(len(parsedArray)-1)
+
+        #Parse array one extra step to get rid of item number
+        for items in parsedArray:
+            updatedString = items[3:]
+            items_and_descrip_Array.append(updatedString)
+
+        #Final parse to respective arrays for item titles and item descriptions
+        for x in items_and_descrip_Array:
+            indexAt = x.index(":")
+            print(indexAt)
+            self.item_title_array.append(x[0:indexAt])
+            self.item_descrip_array.append(x[indexAt+2:])
+
+        #Remove leading white space on item 10. Keep line if items is 10 or more
+        self.item_title_array[9] = self.item_title_array[9].lstrip(" ")
+
+        print(self.item_descrip_array)
+        print(self.item_title_array)
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
@@ -45,3 +79,4 @@ class Filter(models.Model):
         )
         self.output_text = response['choices'][0]['message']['content']
         self.save()
+        self.parsingFunc(self.output_text)
