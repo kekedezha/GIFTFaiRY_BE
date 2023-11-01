@@ -22,6 +22,9 @@ class Filter(models.Model):
     interest = models.CharField(max_length=300)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
+    item_title_string = models.TextField(default='')
+    item_descrip_string = models.TextField(default='')
+    openai_descrip_string = models.TextField(default='')
     item_title_array = []
     item_descrip_array = []
     openai_descrip_array = []
@@ -32,11 +35,13 @@ class Filter(models.Model):
     def parsingFunc(self, string1):
         #Parsed output_text response to initial array that will be used for further parsing
         parsedArray = str(string1).split("\n\n")
+        #Parsed array length
+        parsedArrayLen = len(parsedArray)
         items_and_descrip_Array = []
         
         #Appending openAI general description of responses
         self.openai_descrip_array.append(parsedArray[0])
-        self.openai_descrip_array.append(parsedArray[0])  
+        self.openai_descrip_array.append(parsedArray[parsedArrayLen-1])  
 
         #Get rid of first and last item of intial array that contains openAI general description of responses already stored in separate array above
         parsedArray.pop(0)
@@ -55,10 +60,16 @@ class Filter(models.Model):
             self.item_descrip_array.append(x[indexAt+2:])
 
         #Remove leading white space on item 10. Keep line if items is 10 or more
-        self.item_title_array[9] = self.item_title_array[9].lstrip(" ")
+        if len(self.item_title_array) >= 10:
+            self.item_title_array[len(self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
-        print(self.item_descrip_array)
-        print(self.item_title_array)
+        #Join all elements of parsed arrays into separate strings to have ready to pass over to front end. 
+        self.item_title_string = ",".join(self.item_title_array)
+        self.item_descrip_string = ",".join(self.item_descrip_array)
+        self.openai_descrip_string = ",".join(self.openai_descrip_array)
+        print(self.item_descrip_string)
+        print(self.item_title_string)
+        print(self.openai_descrip_string)
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
