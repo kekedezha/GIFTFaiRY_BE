@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 import openai
 import os
 from dotenv import load_dotenv
+from django.contrib.postgres.fields import ArrayField
 
 
 # Create your models here.
@@ -55,8 +56,8 @@ class Filter(models.Model):
             self.item_descrip_array.append(x[indexAt+2:])
 
         #Remove leading white space on item 10. Keep line if items is 10 or more
-        if item_title_array.length() >= 10: 
-            self.item_title_array[item_title_array.length()-1] = self.item_title_array[item_title_array.length()-1].lstrip(" ")
+        if len(self.item_title_array) >= 10: 
+            self.item_title_array[len(self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
         print(self.item_descrip_array)
         print(self.item_title_array)
