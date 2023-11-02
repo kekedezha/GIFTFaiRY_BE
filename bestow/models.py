@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 import openai
 import os
 from dotenv import load_dotenv
-from django.contrib.postgres.fields import ArrayField
 
 
 # Create your models here.
@@ -34,6 +33,12 @@ class Filter(models.Model):
         return str(self.id)
     
     def parsingFunc(self, string1):
+        item_descrip_string = ""
+        item_title_array = ""
+        openai_descrip_string = ""
+        item_descrip_array = []
+        item_title_array = []
+        openai_descrip_array = []
         #Parsed output_text response to initial array that will be used for further parsing
         parsedArray = str(string1).split("\n\n")
         #Parsed array length
