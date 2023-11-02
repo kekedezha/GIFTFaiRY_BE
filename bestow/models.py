@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 import openai
 import os
 from dotenv import load_dotenv
+from django.contrib.postgres.fields import ArrayField
 
 
 # Create your models here.
