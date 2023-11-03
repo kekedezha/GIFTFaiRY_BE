@@ -33,14 +33,21 @@ class Filter(models.Model):
         return str(self.id)
     
     def parsingFunc(self, string1):
-        item_descrip_string = ""
-        item_title_array = ""
-        openai_descrip_string = ""
-        item_descrip_array = []
-        item_title_array = []
-        openai_descrip_array = []
+
+        #Clears string and arrays each time we send a POST and GET a request back from OpenAI
+        self.item_descrip_string = ""
+        self.item_title_string = ""
+        self.openai_descrip_string = ""
+        self.item_descrip_array = []
+        self.item_title_array = []
+        self.openai_descrip_array = []
+
         #Parsed output_text response to initial array that will be used for further parsing
-        parsedArray = str(string1).split("\n\n")
+        if (string1.count("\n\n")>=3):
+            parsedArray = str(string1).split("\n\n")
+        else: 
+            parsedArray = str(string1).split("\n")
+        print(parsedArray)
         #Parsed array length
         parsedArrayLen = len(parsedArray)
         items_and_descrip_Array = []
@@ -52,6 +59,7 @@ class Filter(models.Model):
         #Get rid of first and last item of intial array that contains openAI general description of responses already stored in separate array above
         parsedArray.pop(0)
         parsedArray.pop(len(parsedArray)-1)
+        print(parsedArray)
 
         #Parse array one extra step to get rid of item number
         for items in parsedArray:
@@ -61,7 +69,7 @@ class Filter(models.Model):
         #Final parse to respective arrays for item titles and item descriptions
         for x in items_and_descrip_Array:
             indexAt = x.index(":")
-            print(indexAt)
+            # print(indexAt)
             self.item_title_array.append(x[0:indexAt])
             self.item_descrip_array.append(x[indexAt+2:])
 
@@ -71,11 +79,12 @@ class Filter(models.Model):
 
         #Join all elements of parsed arrays into separate strings to have ready to pass over to front end. 
         self.item_title_string = ",".join(self.item_title_array)
-        self.item_descrip_string = ",".join(self.item_descrip_array)
+        #The * seperates each description, and allows us to parse each description to its own response card
+        self.item_descrip_string = "*".join(self.item_descrip_array)
         self.openai_descrip_string = ",".join(self.openai_descrip_array)
-        print(self.item_descrip_string)
-        print(self.item_title_string)
-        print(self.openai_descrip_string)
+        # print(self.item_descrip_string)
+        # print(self.item_title_string)
+        # print(self.openai_descrip_string)
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
@@ -92,7 +101,7 @@ class Filter(models.Model):
                 {"role": "user", 
                  "content": filters_input}
             ],
-            temperature=0.8,
+            temperature=1,
         )
         self.output_text = response['choices'][0]['message']['content']
         self.save()
