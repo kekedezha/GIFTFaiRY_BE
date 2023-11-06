@@ -12,6 +12,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+
 class Filter(models.Model):
     age = models.CharField(max_length=300)
     gender = models.CharField(max_length=300)
@@ -20,7 +21,8 @@ class Filter(models.Model):
     occasion = models.CharField(max_length=300)
     gift_type = models.CharField(max_length=300)
     interest = models.CharField(max_length=300)
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
+    user = models.ForeignKey(
+        to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
     item_title_string = models.TextField(default='')
     item_descrip_string = models.TextField(default='')
@@ -31,10 +33,10 @@ class Filter(models.Model):
 
     def __str__(self):
         return str(self.id)
-    
+
     def parsingFunc(self, string1):
 
-        #Clears string and arrays each time we send a POST and GET a request back from OpenAI
+        # Clears string and arrays each time we send a POST and GET a request back from OpenAI
         self.item_descrip_string = ""
         self.item_title_string = ""
         self.openai_descrip_string = ""
@@ -42,44 +44,48 @@ class Filter(models.Model):
         self.item_title_array = []
         self.openai_descrip_array = []
 
-        #Parsed output_text response to initial array that will be used for further parsing
-        if (string1.count("\n\n")>=3):
+        # Parsed output_text response to initial array that will be used for further parsing
+        if (string1.count("\n\n") >= 3):
             parsedArray = str(string1).split("\n\n")
-        else: 
+        else:
             parsedArray = str(string1).split("\n")
         print(parsedArray)
-        #Parsed array length
+        # Parsed array length
         parsedArrayLen = len(parsedArray)
         items_and_descrip_Array = []
-        
-        #Appending openAI general description of responses
-        self.openai_descrip_array.append(parsedArray[0])
-        self.openai_descrip_array.append(parsedArray[parsedArrayLen-1])  
 
-        #Get rid of first and last item of intial array that contains openAI general description of responses already stored in separate array above
+        # Appending openAI general description of responses
+        self.openai_descrip_array.append(parsedArray[0])
+        self.openai_descrip_array.append(parsedArray[parsedArrayLen-1])
+
+        # Get rid of first and last item of intial array that contains openAI general description of responses already stored in separate array above
         parsedArray.pop(0)
         parsedArray.pop(len(parsedArray)-1)
         print(parsedArray)
 
-        #Parse array one extra step to get rid of item number
+        # Parse array one extra step to get rid of item number
         for items in parsedArray:
             updatedString = items[3:]
             items_and_descrip_Array.append(updatedString)
 
-        #Final parse to respective arrays for item titles and item descriptions
+        # Final parse to respective arrays for item titles and item descriptions
         for x in items_and_descrip_Array:
-            indexAt = x.index(":")
-            # print(indexAt)
-            self.item_title_array.append(x[0:indexAt])
-            self.item_descrip_array.append(x[indexAt+2:])
+            indexAt = x.find(":")
+            # This if will catch the ValueError: substring not found. Arrays are parsed correctly but when items are separated by only one '\n' then
+            # extra index at the front of the array and at the last element. They are empty strings and do not contain ":". Since the .find() will return a -1
+            # if not found, then it will not append the blank strings.
+            if (indexAt != -1):
+                self.item_title_array.append(x[0:indexAt])
+                self.item_descrip_array.append(x[indexAt+2:])
 
-        #Remove leading white space on item 10. Keep line if items is 10 or more
+        # Remove leading white space on item 10. Keep line if items is 10 or more
         if len(self.item_title_array) >= 10:
-            self.item_title_array[len(self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
+            self.item_title_array[len(
+                self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
-        #Join all elements of parsed arrays into separate strings to have ready to pass over to front end. 
+        # Join all elements of parsed arrays into separate strings to have ready to pass over to front end.
         self.item_title_string = ",".join(self.item_title_array)
-        #The * seperates each description, and allows us to parse each description to its own response card
+        # The * seperates each description, and allows us to parse each description to its own response card
         self.item_descrip_string = "*".join(self.item_descrip_array)
         self.openai_descrip_string = ",".join(self.openai_descrip_array)
         # print(self.item_descrip_string)
@@ -98,7 +104,7 @@ class Filter(models.Model):
             messages=[
                 {"role": "system",
                     "content": "You are a helpful assistant"},
-                {"role": "user", 
+                {"role": "user",
                  "content": filters_input}
             ],
             temperature=1,
