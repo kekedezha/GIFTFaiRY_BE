@@ -50,7 +50,6 @@ class Filter(models.Model):
             parsedArray = str(string1).split("\n\n")
         else:
             parsedArray = str(string1).split("\n")
-        print(parsedArray)
         # Parsed array length
         parsedArrayLen = len(parsedArray)
         items_and_descrip_Array = []
@@ -62,7 +61,6 @@ class Filter(models.Model):
         # Get rid of first and last item of intial array that contains openAI general description of responses already stored in separate array above
         parsedArray.pop(0)
         parsedArray.pop(len(parsedArray)-1)
-        print(parsedArray)
 
         # Parse array one extra step to get rid of item number
         for items in parsedArray:
