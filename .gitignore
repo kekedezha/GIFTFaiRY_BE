@@ -7,3 +7,5 @@ env.bak/
 venv.bak/
 myVirtEnvCD/
 db.sqlite3/
+db.sqlite3
+*sqlite
