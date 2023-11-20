@@ -10,7 +10,7 @@ Django>=2.2,<3.0
 django-cors-headers>=3.0,<4.0
 djangorestframework==3.14.0
 environ==1.0
-filelock>=3.13.1,<4.0.0
+filelock>=3.13.1,<=5.0.0
 frozenlist>=1.0,<2.0
 gunicorn==21.2.0
 idna==3.4
