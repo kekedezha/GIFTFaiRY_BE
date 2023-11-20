@@ -9,7 +9,7 @@ Django>=2.2,<3.0
 django-cors-headers>=3.0,<4.0
 djangorestframework==3.14.0
 environ==1.0
-frozenlist==1.4.0
+frozenlist>=1.0,<2.0
 idna==3.4
 multidict==6.0.4
 openai==0.27.10
