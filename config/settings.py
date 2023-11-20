@@ -132,6 +132,6 @@ AUTH_USER_MODEL = 'bestow.User'
 # CORS_ALLOW_ALL_ORIGINS = True  # For development only, or:
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    'giftfairyai-be-server.onrender.com',
+    "https://giftfairyai-be-server.onrender.com/api/filter/generate",
     'https://giftfairy.netlify.app',
 ]
