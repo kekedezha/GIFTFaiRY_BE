@@ -1,4 +1,4 @@
-
+{
     "_meta": {
         "hash": {
             "sha256": "89f395be8d4e14174c8053e3eaa70cf6a0bbf72d933d03f5f7274cbd967431ce"
@@ -280,4 +280,4 @@
         }
     },
     "develop": {}
-
+}
