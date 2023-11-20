@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from corsheaders.decorators import cors_headers
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
