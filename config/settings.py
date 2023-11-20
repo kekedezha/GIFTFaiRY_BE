@@ -129,8 +129,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bestow.User'
 
-CORS_ALLOW_ALL_ORIGINS = True  # For development only, or:
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     # Add other origins as needed
-# ]
+# CORS_ALLOW_ALL_ORIGINS = True  # For development only, or:
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    'giftfairyai-be-server.onrender.com',
+    'https://giftfairy.netlify.app',
+]
