@@ -135,3 +135,5 @@ CORS_ALLOWED_ORIGINS = [
     "https://giftfairyai-be-server.onrender.com/api/filter/generate",
     "https://giftfairy.netlify.app",
 ]
+
+ACCESS_CONTROL_ALLOW_ORIGIN = True
