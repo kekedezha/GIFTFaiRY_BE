@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-j!h)jv!upp01q=2(-7)rib($r%yiehj-uju5x%)-nzgka$3peb
 DEBUG = True
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'giftfairyai-be-server.onrender.com']
-ALLOWED_HOSTS = ['https://giftfairyai-be-server.onrender.com']
+ALLOWED_HOSTS = ['giftfairyai-be-server.onrender.com']
 
 # Application definition
 
@@ -133,6 +133,6 @@ CORS_ALLOW_ALL_HEADERS = True  # For development only, or:
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://giftfairyai-be-server.onrender.com/api/filter/generate",
-    "https://giftfairy.netlify.app/selections",
+    "https://giftfaimadry.netlify.app/selections",
     "https://giftfairy.netlify.app",
 ]
