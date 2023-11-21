@@ -133,6 +133,5 @@ CORS_ALLOW_ALL_HEADERS = True  # For development only, or:
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://giftfairyai-be-server.onrender.com/api/filter/generate",
-    "https://giftfairy.netlify.app/selections",
     "https://giftfairy.netlify.app",
 ]
