@@ -136,7 +136,11 @@ AUTH_USER_MODEL = 'bestow.User'
 #     "https://giftfairy.netlify.app"
 # ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://giftfairy.netlify.app",
+]
+
+# CORS_ALLOW_ALL_ORIGINS = True
 
 # CORS_ALLOW_METHODS = ['OPTIONS', 'GET', 'POST']
 
