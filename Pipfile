@@ -10,6 +10,7 @@ django-cors-headers = "*"
 openai = ">=0.27.0"
 gunicorn = "*"
 django-environ = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
