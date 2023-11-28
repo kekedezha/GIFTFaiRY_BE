@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-j!h)jv!upp01q=2(-7)rib($r%yiehj-uju5x%)-nzgka$3peb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['giftfairyai-be-server.onrender.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -128,9 +128,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bestow.User'
 
-# CORS_ALLOWED_ORIGINS = [a
-#     "http://localhost:5173",
-#     "https://giftfairy.netlify.app/",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://giftfairy.netlify.app/",
+    "https://giftfairyai-be-server.onrender.com"
+]
 
 CORS_ALLOW_ALL_ORIGINS = True
