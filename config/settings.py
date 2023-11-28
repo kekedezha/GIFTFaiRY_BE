@@ -128,15 +128,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bestow.User'
 
-# CORS_ALLOW_ALL_HEADERS = True  # For development only, or:
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "https://giftfairy.netlify.app"
-# ]
-
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:5173",
 #     "https://giftfairy.netlify.app/",
 # ]
 
-ACCESS_CONTROL_ALLOW_ORIGIN = True
+CORS_ALLOW_ALL_ORIGINS = True
