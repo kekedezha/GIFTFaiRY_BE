@@ -4,7 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+django = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
 openai = ">=0.27.0"
 
 [dev-packages]
