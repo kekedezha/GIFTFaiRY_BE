@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-import openai
+from openai import OpenAI
 import os
 from dotenv import load_dotenv
+
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 
 # Create your models here.
@@ -97,17 +99,24 @@ class Filter(models.Model):
         filters_input = f'You are a tool that helps people buy gifts for others. Suggest 10 ideal gifts for somebody with these characteristics and traits, they are {self.age} years old, their gender identify is {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. Please take all parameters into equal consideration.'
 
         MODEL = "gpt-3.5-turbo"
-        openai.api_key = os.getenv('OPENAI_API_KEY')
-        response = openai.ChatCompletion.create(
-            model=MODEL,
-            messages=[
-                {"role": "system",
-                    "content": "You are a helpful assistant"},
-                {"role": "user",
-                 "content": filters_input}
-            ],
-            temperature=1,
-        )
-        self.output_text = response['choices'][0]['message']['content']
+        
+        response = client.chat.completions.create(model=MODEL,
+        messages=[
+            {"role": "system",
+                "content": "You are a helpful assistant"},
+            {"role": "user",
+             "content": filters_input}
+        ],
+        temperature=1)
+        print(response.choices[0].message.content)
+
+# # Access the generated content
+#         try:
+#             generated_content = response['choices'][0]['message']['content']
+#         except KeyError:
+#     # Handle the case where the structure of the response is different
+#             generated_content = str(response)
+
+        self.output_text = response.choices[0].message.content
         self.save()
         self.parsingFunc(self.output_text)

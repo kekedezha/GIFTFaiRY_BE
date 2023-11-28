@@ -131,7 +131,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -140,8 +139,8 @@ AUTH_USER_MODEL = 'bestow.User'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://giftfairy.netlify.app/",
-    "https://giftfairyai-be-server.onrender.com"
+    "https://giftfairy.netlify.app",
+    "https://giftfairyai-be-server.onrender.com",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
