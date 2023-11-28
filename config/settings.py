@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-j!h)jv!upp01q=2(-7)rib($r%yiehj-uju5x%)-nzgka$3peb
 DEBUG = True
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'giftfairyai-be-server.onrender.com']
-ALLOWED_HOSTS = ['giftfairyai-be-server.onrender.com', 'giftfairyai-be-server.onrender.com/*']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -38,20 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bestow',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'bestow',
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -137,12 +137,8 @@ AUTH_USER_MODEL = 'bestow.User'
 # ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://giftfairy.netlify.app",
-    "https://giftfairy.netlify.app/selections",
+    "http://localhost:5173",
+    "https://giftfairy.netlify.app/",
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOW_METHODS = ['OPTIONS', 'GET', 'POST']
 
 # ACCESS_CONTROL_ALLOW_ORIGIN = True
