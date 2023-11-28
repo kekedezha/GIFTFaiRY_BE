@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from openai import OpenAI
+from openai import Completion
 import os
 from dotenv import load_dotenv
 
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+client = Completion.create(api_key=os.getenv('OPENAI_API_KEY'))
 
 
 # Create your models here.
