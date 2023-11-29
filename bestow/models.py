@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from openai import OpenAI
+from openai import ChatCompletion
 import os
 from dotenv import load_dotenv
 
@@ -99,17 +99,16 @@ class Filter(models.Model):
 
         MODEL = "gpt-3.5-turbo"
         
-        client = OpenAI(
-g        )
 
-        response = client.chat.completions.create(model=MODEL,
-        messages=[
-            {"role": "system",
-                "content": "You are a helpful assistant"},
-            {"role": "user",
-             "content": filters_input}
-        ],
-        temperature=1)
+        response = ChatCompletion.create(
+            model=MODEL,
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant"},
+                {"role": "user", "content": filters_input}
+            ],
+            temperature=1,
+            api_key=os.environ.get('OPENAI_API_KEY')
+        )
         print(response.choices[0].message.content)
 
 # # Access the generated content
