@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from openai import Completion
+from openai import OpenAI
 import os
 from dotenv import load_dotenv
 
-client = Completion.create(api_key=os.getenv('OPENAI_API_KEY'))
 
 
 # Create your models here.
@@ -100,6 +99,10 @@ class Filter(models.Model):
 
         MODEL = "gpt-3.5-turbo"
         
+        client = OpenAI(
+            api_key=os.environ.get('OPENAI_API_KEY')
+        )
+
         response = client.chat.completions.create(model=MODEL,
         messages=[
             {"role": "system",
