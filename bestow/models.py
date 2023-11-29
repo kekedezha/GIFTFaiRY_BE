@@ -100,8 +100,7 @@ class Filter(models.Model):
         MODEL = "gpt-3.5-turbo"
         
         client = OpenAI(
-            api_key=os.environ.get('OPENAI_API_KEY')
-        )
+g        )
 
         response = client.chat.completions.create(model=MODEL,
         messages=[
