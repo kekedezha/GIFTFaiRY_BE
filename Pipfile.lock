@@ -241,8 +241,7 @@
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": ">=2.2,<3.0"
-"
+            "version": "==4.2.7"
         },
         "django-cors-headers": {
             "hashes": [
