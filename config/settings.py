@@ -149,7 +149,7 @@ AUTH_USER_MODEL = 'bestow.User'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://giftfairy.netlify.app",
-    "https://giftfairyai-be-server.onrender.com",
+    "https://giftfairy-be-server.onrender.com",
 ]
 
 if env("RENDER"):
