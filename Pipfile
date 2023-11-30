@@ -12,6 +12,7 @@ gunicorn = "*"
 django-environ = "*"
 psycopg2-binary = "*"
 typing-extensions = "*"
+whitenoise = "*"
 
 [dev-packages]
 
