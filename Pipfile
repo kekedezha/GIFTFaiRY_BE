@@ -13,6 +13,7 @@ django-environ = "*"
 psycopg2-binary = "*"
 typing-extensions = "*"
 whitenoise = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

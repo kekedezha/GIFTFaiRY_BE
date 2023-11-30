@@ -4,8 +4,6 @@ from openai import ChatCompletion
 import os
 from dotenv import load_dotenv
 
-
-
 # Create your models here.
 class User(AbstractUser):
     pass
