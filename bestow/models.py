@@ -93,7 +93,7 @@ class Filter(models.Model):
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
         load_dotenv()
-        filters_input = f'You are a tool that helps people buy gifts for others. Suggest 5 ideal gifts for somebody with these characteristics and traits, they are {self.age} years old, their gender identify is {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. Please take all parameters into equal consideration.'
+        filters_input = f'You are a tool that helps people buy gifts for others. Suggest 10 ideal gifts for somebody with these characteristics and traits, they are {self.age} years old, their gender identify is {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. Please take all parameters into equal consideration.'
 
         MODEL = "gpt-3.5-turbo"
         
