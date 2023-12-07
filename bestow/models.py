@@ -21,6 +21,8 @@ class Filter(models.Model):
     gift_type = models.CharField(max_length=300)
     interest = models.CharField(max_length=300)
     activity_level = models.CharField(max_length=300)
+    personality = models.CharField(max_length=300)
+    nature = models.CharField(max_length=300)
     user = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
@@ -93,15 +95,14 @@ class Filter(models.Model):
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
         load_dotenv()
-        filters_input = f'You are a tool that helps people buy gifts for others. Suggest 10 ideal gifts for somebody with these characteristics and traits, they are {self.age} years old, their gender identify is {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. Please take all parameters into equal consideration.'
+        filters_input = f'Consider the following details about the recipient: they are a {self.age}, identify as {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. They are {self.personality} and they prefer being {self.nature}.Please provide a curated list of 10 diverse and thoughtful gift suggestions that take into account all the specified characteristics.'
 
         MODEL = "gpt-3.5-turbo"
-        
 
         response = ChatCompletion.create(
             model=MODEL,
             messages=[
-                {"role": "system", "content": "You are a helpful assistant"},
+                {"role": "system", "content": "You are an AI-powered gift advisor assisting users in selecting the perfect gift for their loved ones."},
                 {"role": "user", "content": filters_input}
             ],
             temperature=1,
