@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import environ
+import dj_database_url
 
 
 env = environ.Env(
@@ -96,6 +97,7 @@ DATABASES = {
     }
 }
 
+DATABASES["default"] = dj_database_url.parse("postgres://giftfairy_render_databse_user:GdPb12nM9xgfm0ULkVE0LcRZoVSCwuHv@dpg-clefibvgsrdc739sf0sg-a.ohio-postgres.render.com/giftfairy_render_databse"),
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
