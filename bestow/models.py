@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from openai import ChatCompletion
 import os
 from dotenv import load_dotenv
+from django.utils import timezone
 
 # Create your models here.
 class User(AbstractUser):
@@ -26,7 +27,7 @@ class Filter(models.Model):
     user = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     item_title_string = models.TextField(default='')
     item_descrip_string = models.TextField(default='')
     openai_descrip_string = models.TextField(default='')
