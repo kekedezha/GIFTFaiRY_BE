@@ -26,12 +26,17 @@ class Filter(models.Model):
     user = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
+    created_at = models.DateTimeField(auto_now_add=True)
     item_title_string = models.TextField(default='')
     item_descrip_string = models.TextField(default='')
     openai_descrip_string = models.TextField(default='')
     item_title_array = []
     item_descrip_array = []
     openai_descrip_array = []
+
+    class FilterManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().order_by('created_at')
 
     def __str__(self):
         return str(self.id)
