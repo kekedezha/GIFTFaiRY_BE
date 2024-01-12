@@ -4,6 +4,7 @@ from openai import ChatCompletion
 import os
 from dotenv import load_dotenv
 from django.utils import timezone
+from datetime import timedelta
 
 # Create your models here.
 class User(AbstractUser):
