@@ -10,6 +10,9 @@ class ProfileViewSet(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "username"
 
 class FilterPostViewSet(generics.CreateAPIView):
+    '''
+    METHODS: POST
+    '''
     queryset = Filter.objects.all()
     serializer_class = FilterPostSerializer
 
@@ -18,5 +21,8 @@ class FilterPostViewSet(generics.CreateAPIView):
         gift.send_filters()
 
 class FilterGetViewSet(generics.RetrieveAPIView):
+    '''
+    METHODS: GET
+    '''
     queryset = Filter.objects.all()
     serializer_class = FilterGetSerializer

@@ -29,8 +29,6 @@ class Filter(models.Model):
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
     created_at = models.DateTimeField(default=timezone.now())
-    print('HEY THIS IS THE TIMEZONE')
-    print(timezone.now())
     item_title_string = models.TextField(default='')
     item_descrip_string = models.TextField(default='')
     openai_descrip_string = models.TextField(default='')
