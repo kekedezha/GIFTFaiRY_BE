@@ -27,7 +27,7 @@ class Filter(models.Model):
     user = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
-    created_at = models.DateTimeField(default='America/New_York')
+    created_at = models.DateTimeField(auto_now_add=True)
     item_title_string = models.TextField(default='')
     item_descrip_string = models.TextField(default='')
     openai_descrip_string = models.TextField(default='')
