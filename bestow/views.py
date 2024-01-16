@@ -20,7 +20,7 @@ class FilterPostViewSet(generics.CreateAPIView):
         gift = serializer.save()
         gift.send_filters()
 
-class FilterGetViewSet(generics.RetrieveAPIView):
+class FilterGetViewSet(generics.ListAPIView):
     '''
     METHODS: GET
     '''

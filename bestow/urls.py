@@ -7,5 +7,5 @@ urlpatterns = [
 
     # Filtering 
     path('api/filter/generate', views.FilterPostViewSet.as_view(), name="filter-post"),
-    path('api/filter/response/<int:pk>', views.FilterGetViewSet.as_view(), name="filter-get"),
+    path('api/filter/response/', views.FilterGetViewSet.as_view(), name="filter-get"),
 ]
