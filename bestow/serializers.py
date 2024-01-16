@@ -20,4 +20,4 @@ class FilterPostSerializer(serializers.ModelSerializer):
 class FilterGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Filter
-        fields = ['output_text']
+        fields = "__all__"
