@@ -126,7 +126,5 @@ class Filter(models.Model):
 
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
-        print(self.created_at)
-        self.created_at = (self.created_at - timedelta(hours=5))
-        print(self.created_at)
+        # self.created_at = (self.created_at - timedelta(hours=5))
         self.save()
