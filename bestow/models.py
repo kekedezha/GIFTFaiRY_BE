@@ -7,6 +7,8 @@ from django.utils import timezone
 from datetime import timedelta
 
 # Create your models here.
+
+
 class User(AbstractUser):
     pass
 
@@ -91,7 +93,7 @@ class Filter(models.Model):
                 self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
         # Join all elements of parsed arrays into separate strings to have ready to pass over to front end.
-        self.item_title_string = ",".join(self.item_title_array)
+        self.item_title_string = " ,".join(self.item_title_array)
         # The * seperates each description, and allows us to parse each description to its own response card
         self.item_descrip_string = "*".join(self.item_descrip_array)
         self.openai_descrip_string = ",".join(self.openai_descrip_array)
