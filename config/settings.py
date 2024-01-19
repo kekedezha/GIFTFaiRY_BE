@@ -130,6 +130,8 @@ TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
+USE_TZ = False
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -140,7 +142,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-if not DEBUG: 
+if not DEBUG:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -157,8 +159,9 @@ CORS_ALLOWED_ORIGINS = [
 
 if env("RENDER"):
     ALLOWED_HOSTS.append(env("RENDER_EXTERNAL_HOSTNAME"))
-    DJANGO_SUPERUSER_USERNAME=env("DJANGO_SUPERUSER_USERNAME") # add this
-    DJANGO_SUPERUSER_PASSWORD=env("DJANGO_SUPERUSER_PASSWORD") # add this too
-    DJANGO_SUPERUSER_EMAIL=env("DJANGO_SUPERUSER_EMAIL") # and also this
+    DJANGO_SUPERUSER_USERNAME = env("DJANGO_SUPERUSER_USERNAME")  # add this
+    DJANGO_SUPERUSER_PASSWORD = env(
+        "DJANGO_SUPERUSER_PASSWORD")  # add this too
+    DJANGO_SUPERUSER_EMAIL = env("DJANGO_SUPERUSER_EMAIL")  # and also this
 
 # CORS_ALLOW_ALL_ORIGINS = True
