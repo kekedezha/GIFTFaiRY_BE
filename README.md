@@ -1,7 +1,7 @@
 # GIFTFaiRY
 GIFTFaiRY🧚🏻 is your personal shopping assistant powered by artificial intelligence (OpenAI/ChatGPT 3.5 API). By asking you a series of tailored questions about the recipient, it harnesses the capabilities of AI to provided you with a curated list of ideal gift options! 
 
-[GIFTFaiRY](https://giftfairy.netlify.app/)
+Shop Now: [GIFTFaiRY](https://giftfairy.netlify.app/)
 
 
 https://github.com/kekedezha/GiftFairy-BE/assets/105559393/7f05056f-861f-4098-a559-6877018cd213
@@ -42,7 +42,7 @@ Front-End: Visit [GifFairy-FE](https://github.com/kekedezha/GiftFairy-FE/blob/ma
 - User can select a 'write-in you own', leave it blank and proceed to the next page, causing the POST request to OpenAI to fail.
 - Refreshing browser on anything but the landing page causes netlify to display "Page Not Found"
 
-### 📈 Overall Growth:
+## 📈 Overall Growth:
 
 Each part of this project helped me understand more about building apps, managing complex information, and improving user experience. It was more than just making a web-app. It was about solving problems, learning new things, and improving my skills for future work.
 
