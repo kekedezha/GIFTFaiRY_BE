@@ -19,7 +19,7 @@ Back-End:
   - `OpenAI/ChatGPT 3.5 API`
   - `PostgreSQL`
   
-Front-End: Visit [GifFairy-FE](https://github.com/kekedezha/GiftFairy-FE/blob/main/README.md)
+Front-End: Visit [GifFairy-FE](https://github.com/kekedezha/GiftFairy-FE)
 
 ## 💡 Key Features
 - AI generated gift ideas, with direct link to Amazon
