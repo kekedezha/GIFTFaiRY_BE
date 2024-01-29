@@ -27,7 +27,7 @@ class Filter(models.Model):
     activity_level = models.CharField(max_length=300)
     personality = models.CharField(max_length=300)
     nature = models.CharField(max_length=300)
-    user = models.ForeignKey(
+    user_id = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     output_text = models.TextField(default='')
     created_at = models.DateTimeField(default=timezone.now)
