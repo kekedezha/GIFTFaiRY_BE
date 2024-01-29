@@ -18,7 +18,7 @@ class UserPostViewSet(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        user.saveToUserDatabase()
+        user.create_user()
 
 class FilterPostViewSet(generics.CreateAPIView):
     '''

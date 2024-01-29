@@ -10,7 +10,11 @@ from datetime import timedelta
 
 
 class User(AbstractUser):
+
     uid = models.CharField(max_length=300, null=True)
+
+    def create_user(self, username=None, password=None):
+        self.save()
 
     pass
 
