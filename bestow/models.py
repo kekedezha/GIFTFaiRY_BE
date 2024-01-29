@@ -10,10 +10,16 @@ from datetime import timedelta
 
 
 class User(AbstractUser):
+    uid = models.CharField(max_length=300, null=True)
+
     pass
 
     def __str__(self):
         return self.username
+
+    def saveToUserDatabase(self):
+        self.save()
+    
 
 
 class Filter(models.Model):
