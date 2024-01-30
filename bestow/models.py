@@ -21,8 +21,11 @@ class User(AbstractUser):
         return self.username
 
     def saveToUserDatabase(self):
+        global filter_table_userID 
+        filter_table_userID = self.id
         self.save()
     
+
 
 
 class Filter(models.Model):
@@ -137,5 +140,5 @@ class Filter(models.Model):
 
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
-        print("This is the user instance id: " + User.id)
+        self.user = filter_table_userID
         self.save()
