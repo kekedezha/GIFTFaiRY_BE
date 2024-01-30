@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 # Create your models here.
-
+filter_table_userID = 0
 
 class User(AbstractUser):
 
@@ -21,12 +21,9 @@ class User(AbstractUser):
         return self.username
 
     def saveToUserDatabase(self):
-        global filter_table_userID 
         filter_table_userID = self.id
         self.save()
     
-
-
 
 class Filter(models.Model):
     age = models.CharField(max_length=300)
@@ -40,7 +37,7 @@ class Filter(models.Model):
     personality = models.CharField(max_length=300)
     nature = models.CharField(max_length=300)
     user = models.ForeignKey(
-        to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
+        to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True, db_column='user_id')
     output_text = models.TextField(default='')
     created_at = models.DateTimeField(default=timezone.now)
     item_title_string = models.TextField(default='')
