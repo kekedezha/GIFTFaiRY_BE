@@ -7,7 +7,6 @@ from django.utils import timezone
 from datetime import timedelta
 
 # Create your models here.
-# filter_table_userID = 0
 
 class User(AbstractUser):
 
@@ -21,7 +20,6 @@ class User(AbstractUser):
         return self.username
 
     def saveToUserDatabase(self):
-        # filter_table_userID = self.id
         self.save()
     
 
@@ -37,7 +35,8 @@ class Filter(models.Model):
     personality = models.CharField(max_length=300)
     nature = models.CharField(max_length=300)
     user = models.ForeignKey(
-        to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True, db_column='user_id')
+        to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
+    email = models.CharField(max_length=300, default='')
     output_text = models.TextField(default='')
     created_at = models.DateTimeField(default=timezone.now)
     item_title_string = models.TextField(default='')
@@ -106,9 +105,7 @@ class Filter(models.Model):
         # The * seperates each description, and allows us to parse each description to its own response card
         self.item_descrip_string = "*".join(self.item_descrip_array)
         self.openai_descrip_string = ",".join(self.openai_descrip_array)
-        # print(self.item_descrip_string)
-        # print(self.item_title_string)
-        # print(self.openai_descrip_string)
+
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
@@ -126,16 +123,9 @@ class Filter(models.Model):
             temperature=1,
             api_key=os.environ.get('OPENAI_API_KEY')
         )
-        # print(response.choices[0].message.content)
-
-# # Access the generated content
-#         try:
-#             generated_content = response['choices'][0]['message']['content']
-#         except KeyError:
-#     # Handle the case where the structure of the response is different
-#             generated_content = str(response)
 
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
-        # self.user = filter_table_userID
+        userInstance = User.object.get(email=self.email)
+        self.user = userInstance.id
         self.save()
