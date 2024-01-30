@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 # Create your models here.
-filter_table_userID = 0
+# filter_table_userID = 0
 
 class User(AbstractUser):
 
@@ -21,7 +21,7 @@ class User(AbstractUser):
         return self.username
 
     def saveToUserDatabase(self):
-        filter_table_userID = self.id
+        # filter_table_userID = self.id
         self.save()
     
 
@@ -137,5 +137,5 @@ class Filter(models.Model):
 
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
-        self.user = filter_table_userID
+        # self.user = filter_table_userID
         self.save()
