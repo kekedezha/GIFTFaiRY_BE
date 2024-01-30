@@ -137,5 +137,5 @@ class Filter(models.Model):
 
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
-        # self.created_at = (self.created_at - timedelta(hours=5))
+        print("This is the user instance id: " + User.id)
         self.save()
