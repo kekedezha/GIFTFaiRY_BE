@@ -127,5 +127,5 @@ class Filter(models.Model):
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
         userInstance = User.objects.get(email=self.email)
-        self.user = userInstance.id
+        self.user = userInstance
         self.save()
