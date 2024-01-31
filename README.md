@@ -26,13 +26,15 @@ Working Integration:
 
 User Authentication
 Profile view for history of gift ideas generated
-Improvements
 
+Improvements
 Add a button where user can choose between Amazon or Etsy. Current version is tailored towards items you can purchase on Amazon
 Transition web-app to mobile app and add to app store for both Apple and Andriod
 Integrate AWS for language selection
+
 🪲 Bugs
 User can select a 'write-in you own', leave it blank and proceed to the next page, causing the POST request to OpenAI to fail.
 Refreshing browser on anything but the landing page causes netlify to display "Page Not Found"
+
 📈 Overall Growth:
 Each part of this project helped me understand more about building apps, managing complex information, and improving user experience. It was more than just making a web-app. It was about solving problems, learning new things, and improving my skills for future work.
