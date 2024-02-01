@@ -15,7 +15,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=300, null=True, blank=True, unique=True)
     email = models.CharField(max_length=300, null=True, blank=True, unique=True)
 
-    pass
+    pass 
 
     def __str__(self):
         return self.username
