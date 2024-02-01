@@ -13,6 +13,7 @@ class User(AbstractUser):
     uid = models.CharField(max_length=300, null=True)
     password = models.CharField(max_length=300, null=True, blank=True)
     username = models.CharField(max_length=300, null=True, blank=True, unique=True)
+    email = models.CharField(max_length=300, null=True, blank=True, unique=True)
 
     pass
 
