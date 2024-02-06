@@ -38,3 +38,8 @@ class FilterGetViewSet(generics.ListAPIView):
     queryset = Filter.objects.all()
     serializer_class = FilterGetSerializer
     lookup_field = "email"
+
+        def get_queryset(self):
+            # Filter queryset based on the currently authenticated user's email address
+            email = self.request.user.email
+            return Filter.objects.filter(email=email)
