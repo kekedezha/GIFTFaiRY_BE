@@ -35,6 +35,6 @@ class FilterGetViewSet(generics.ListAPIView):
     '''
     METHODS: GET
     '''
-    queryset = Filter.objects.filter()
+    queryset = Filter.objects.all()
     serializer_class = FilterGetSerializer
     lookup_field = "email"
