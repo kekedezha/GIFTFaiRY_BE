@@ -40,10 +40,11 @@ class FilterGetViewSet(generics.ListAPIView):
     lookup_field = "email"
 
     def get_queryset(self):
+        userInstance = User.objects.get(email=self.email)
         # Get the email of the currently authenticated user
-        email = self.request.user.email
+        # email = self.request.user.email
         # Filter queryset based on the user's email address
-        return Filter.objects.filter(email=email)
+        return Filter.objects.filter(user=userInstance)
     # queryset = Filter.objects.filter(email=email)
     # serializer_class = FilterGetSerializer
     # lookup_field = "email"
