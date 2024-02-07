@@ -54,6 +54,10 @@ class Filter(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def getUserInstance(self):
+        userInstance = User.objects.get(email=self.email)
+        return userInstance 
+
     def parsingFunc(self, string1):
 
         # Clears string and arrays each time we send a POST and GET a request back from OpenAI

@@ -36,9 +36,15 @@ class FilterGetViewSet(generics.ListAPIView):
     METHODS: GET
     '''
 
+    def perform_create(self, serializer):
+        user = serializer.save()
+        userInstance = user.getUserInstance()
+        queryset = Filter.objects.filter(user=userInstance)
+        serializer_class = FilterGetSerializer
+
     # This line gets all of the data back from Filter table
-    queryset = Filter.objects.all()
+    # queryset = Filter.objects.all()
     # We are assigning all of the data to serializer_class from the fields that
     # are specificed in FilterGetSerializer in serializers.py
-    serializer_class = FilterGetSerializer
-    lookup_field = "username"
+    # serializer_class = FilterGetSerializer
+    # lookup_field = "username"
