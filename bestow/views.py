@@ -36,6 +36,9 @@ class FilterGetViewSet(generics.ListAPIView):
     METHODS: GET
     '''
 
-    queryset = User.objects.all()
-    serializer_class = UserPostSerializer
+    # This line gets all of the data back from Filter table
+    queryset = Filter.objects.all()
+    # We are assigning all of the data to serializer_class from the fields that
+    # are specificed in FilterGetSerializer in serializers.py
+    serializer_class = FilterGetSerializer
     lookup_field = "username"
