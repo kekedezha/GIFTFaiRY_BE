@@ -35,11 +35,13 @@ class FilterGetViewSet(generics.ListAPIView):
     '''
     METHODS: GET
     '''
-    queryset = Filter.objects.filter(username=email)
+    # Save data from Filter table specified in the FilterGetSerialzer class
+    # to the serializer_class variable
     serializer_class = FilterGetSerializer
-    lookup_field = "email"
 
-    # def get_queryset(self):
-    #     # Filter queryset based on the currently authenticated user's email address
-    #     email = self.request.user.email
-    #     return Filter.objects.filter(email=email)
+    # Overwrites getqueryset function which is a part of GetViewSet class
+    def get_queryset(self):
+        # Get the user ID from the URL parameters
+        email = self.kwargs['email']
+        # Filter queryset based on the user ID
+        return Filter.objects.filter(email=email)
