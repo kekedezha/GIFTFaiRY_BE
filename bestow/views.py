@@ -36,7 +36,7 @@ class FilterGetViewSet(generics.ListAPIView):
     METHODS: GET
     '''
 
-    userInstance = Filter.getUserInstance()
+    userInstance = Filter.getUserInstance(self)
     queryset = Filter.objects.filter(user=userInstance)
     serializer_class = FilterGetSerializer
 
