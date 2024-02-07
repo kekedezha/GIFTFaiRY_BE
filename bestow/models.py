@@ -8,13 +8,21 @@ from datetime import timedelta
 
 # Create your models here.
 
-
 class User(AbstractUser):
-    pass
+
+    uid = models.CharField(max_length=300, null=True)
+    password = models.CharField(max_length=300, null=True, blank=True)
+    username = models.CharField(max_length=300, null=True, blank=True, unique=True)
+    email = models.CharField(max_length=300, null=True, blank=True, unique=True)
+
+    pass 
 
     def __str__(self):
         return self.username
 
+    def saveToUserDatabase(self):
+        self.save()
+    
 
 class Filter(models.Model):
     age = models.CharField(max_length=300)
@@ -29,8 +37,9 @@ class Filter(models.Model):
     nature = models.CharField(max_length=300)
     user = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
+    email = models.CharField(max_length=300, default='')
     output_text = models.TextField(default='')
-    created_at = models.DateTimeField(default=timezone.now())
+    created_at = models.DateTimeField(default=timezone.now)
     item_title_string = models.TextField(default='')
     item_descrip_string = models.TextField(default='')
     openai_descrip_string = models.TextField(default='')
@@ -97,14 +106,12 @@ class Filter(models.Model):
         # The * seperates each description, and allows us to parse each description to its own response card
         self.item_descrip_string = "*".join(self.item_descrip_array)
         self.openai_descrip_string = ",".join(self.openai_descrip_array)
-        # print(self.item_descrip_string)
-        # print(self.item_title_string)
-        # print(self.openai_descrip_string)
+
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
         load_dotenv()
-        filters_input = f'Consider the following details about the recipient: they are a {self.age}, identify as {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. They are {self.personality} and they prefer being {self.nature}.Please provide a curated list of 10 diverse and thoughtful gift suggestions that take into account all the specified characteristics.'
+        filters_input = f'Consider the following details about the recipient: they are a {self.age}, identify as {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. They are {self.personality} and they prefer being {self.nature}. Please provide a curated list of 10 diverse and thoughtful gift suggestions that take into account all the specified characteristics. Please cater the gift suggestions to retail products as opposed to live events.'
 
         MODEL = "gpt-3.5-turbo"
 
@@ -117,16 +124,9 @@ class Filter(models.Model):
             temperature=1,
             api_key=os.environ.get('OPENAI_API_KEY')
         )
-        # print(response.choices[0].message.content)
-
-# # Access the generated content
-#         try:
-#             generated_content = response['choices'][0]['message']['content']
-#         except KeyError:
-#     # Handle the case where the structure of the response is different
-#             generated_content = str(response)
 
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
-        # self.created_at = (self.created_at - timedelta(hours=5))
+        userInstance = User.objects.get(email=self.email)
+        self.user = userInstance
         self.save()
