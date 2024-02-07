@@ -36,11 +36,12 @@ class FilterGetViewSet(generics.ListAPIView):
     METHODS: GET
     '''
 
-    def perform_create(self, serializer):
-        user = serializer.save()
-        userInstance = user.getUserInstance()
-        queryset = Filter.objects.filter(user=userInstance)
-        serializer_class = FilterGetSerializer
+    userInstance = User.getUserInstance()
+    queryset = Filter.objects.filter(user=userInstance)
+    serializer_class = FilterGetSerializer
+
+    # def perform_create(self, serializer):
+    #     user = serializer.save()
 
     # This line gets all of the data back from Filter table
     # queryset = Filter.objects.all()
