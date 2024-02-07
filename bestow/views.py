@@ -36,10 +36,14 @@ class FilterGetViewSet(generics.ListAPIView):
     METHODS: GET
     '''
 
-    queryset = Filter.objects.filter(email="dezha6@hotmail.com")
+    # queryset = Filter.objects.filter(email="dezha6@hotmail.com")
     serializer_class = FilterGetSerializer
-    lookup_field = "user"
 
+    def get_queryset(self):
+        # Get the user ID from the URL parameters
+        email = self.kwargs['email']
+        # Filter queryset based on the user ID
+        return Filter.objects.filter(email=email)
 
     # userInstance = Filter.getUserInstance(self)
     # queryset = Filter.objects.filter(user=userInstance)

@@ -10,5 +10,5 @@ urlpatterns = [
 
     # Filtering 
     path('api/filter/generate', views.FilterPostViewSet.as_view(), name="filter-post"),
-    path('api/filter/response/<email>/', views.FilterGetViewSet.as_view(), name="filter-get"),
+    path('api/filter/response/<str:email>/', views.FilterGetViewSet.as_view(), name="filter-get"),
 ]
