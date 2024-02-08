@@ -2,12 +2,15 @@ from django.shortcuts import render
 from .models import User, Filter
 from rest_framework import generics
 from .serializers import UserPostSerializer, FilterPostSerializer, FilterGetSerializer
+from django.http import HttpResponse
 # Create your views here.
+
 
 class ProfileViewSet(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserPostSerializer
     lookup_field = "username"
+
 
 class UserPostViewSet(generics.CreateAPIView):
     '''
@@ -20,6 +23,7 @@ class UserPostViewSet(generics.CreateAPIView):
         user = serializer.save()
         user.saveToUserDatabase()
 
+
 class FilterPostViewSet(generics.CreateAPIView):
     '''
     METHODS: POST
@@ -30,6 +34,8 @@ class FilterPostViewSet(generics.CreateAPIView):
     def perform_create(self, serializer):
         gift = serializer.save()
         gift.send_filters()
+        return HttpResponse.status_code()
+
 
 class FilterGetViewSet(generics.ListAPIView):
     '''
