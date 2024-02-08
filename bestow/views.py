@@ -34,7 +34,6 @@ class FilterPostViewSet(generics.CreateAPIView):
     def perform_create(self, serializer):
         gift = serializer.save()
         gift.send_filters()
-        return HttpResponse(status=200)
 
 
 class FilterGetViewSet(generics.ListAPIView):
