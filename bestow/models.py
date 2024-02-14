@@ -35,6 +35,7 @@ class Filter(models.Model):
     activity_level = models.CharField(max_length=300)
     personality = models.CharField(max_length=300)
     nature = models.CharField(max_length=300)
+    giftee_name = models.CharField(max_length=300, null=True, blank=True)
     user = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name="filters", blank=True, null=True)
     email = models.CharField(max_length=300, default='')

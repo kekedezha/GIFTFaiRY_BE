@@ -38,4 +38,5 @@ class FilterGetSerializer(serializers.ModelSerializer):
             "nature",
             "created_at",
             "item_title_string",
+            "giftee_name",
         ]
