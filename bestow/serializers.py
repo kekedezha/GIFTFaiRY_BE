@@ -39,4 +39,5 @@ class FilterGetSerializer(serializers.ModelSerializer):
             "created_at",
             "item_title_string",
             "giftee_name",
+            "user_id",
         ]
