@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import User, Filter
 from rest_framework import generics
-from .serializers import UserPostSerializer, FilterPostSerializer, FilterGetSerializer
+from .serializers import UserPostSerializer, FilterPostSerializer, FilterGetSerializer, UserGetSerializer
 from django.http import HttpResponse
 # Create your views here.
 
@@ -22,6 +22,21 @@ class UserPostViewSet(generics.CreateAPIView):
     def perform_create(self, serializer):
         user = serializer.save()
         user.saveToUserDatabase()
+
+class UserGetViewSet(generics.ListAPIView):
+    '''
+    METHODS: GET
+    '''
+    # Save data from User table specified in the UserGetSerialzer class
+    # to the serializer_class variable
+    serializer_class = UserGetSerializer
+
+    # Overwrites getqueryset function which is a part of GetViewSet class
+    def get_queryset(self):
+        # Get the user ID from the URL parameters
+        email = self.kwargs['email']
+        # User queryset based on the user ID
+        return User.objects.filter(email=email)
 
 
 class FilterPostViewSet(generics.CreateAPIView):

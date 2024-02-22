@@ -9,6 +9,13 @@ class UserPostSerializer(serializers.ModelSerializer):
         model = User
         fields = "__all__"
 
+class UserGetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+        ]
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
