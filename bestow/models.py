@@ -116,7 +116,7 @@ class Filter(models.Model):
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
         load_dotenv()
-        filters_input = f'Consider the following details about the recipient: they are a {self.age}, identify as {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. They are {self.personality} and they prefer being {self.nature}. Please provide a curated list of 10 diverse and thoughtful gift suggestions that take into account all the specified characteristics. Please cater the gift suggestions to retail products as opposed to live events.'
+        filters_input = f'Consider the following details about the recipient: they are a {self.age}, identify as {self.gender}, they are my {self.relationship}, my price range is {self.price_range}, the occasion this gift is for is {self.occasion}, I want to give them a {self.gift_type}, their main interest is {self.interest}, and their activity level is {self.activity_level}. They are {self.personality} and they prefer being {self.nature}. Please provide a curated list of 10 diverse and thoughtful gift suggestions that take into account all the specified characteristics. Please cater the gift suggestions to retail products, do not suggest live events or anything else that is not a physical product.'
 
         MODEL = "gpt-3.5-turbo"
 
