@@ -155,7 +155,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://giftfairy.netlify.app",
     "https://giftfairy-be-server.onrender.com",
-    "aigiftfairy.com",
     "https://aigiftfairy.com/"
 ]
 
