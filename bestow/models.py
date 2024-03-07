@@ -126,8 +126,10 @@ class Filter(models.Model):
         self.openai_descrip_array = []
 
         if string1[0] == '1':
+            print("Parsing with method 'parseIfBeginWithNum'")
             self.parseIfBeginWithNum(string1)
         else:
+            print("Parsing output_text normally.")
             self.parseIfBeginNormal(string1)
 
     def clearAsterisk(self, string):
@@ -157,6 +159,9 @@ class Filter(models.Model):
         self.parsingFunc(self.output_text)
         if self.item_title_string.count("**") >= 1 or self.item_title_string.count("*") >= 1:
             self.clearAsterisk(self.item_title_string)
+
+        print(self.item_descrip_string)
+        print(self.item_title_string)
         userInstance = User.objects.get(email=self.email)
         self.user = userInstance
         self.save()
