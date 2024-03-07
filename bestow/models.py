@@ -8,21 +8,24 @@ from datetime import timedelta
 
 # Create your models here.
 
+
 class User(AbstractUser):
 
     uid = models.CharField(max_length=300, null=True)
     password = models.CharField(max_length=300, null=True, blank=True)
-    username = models.CharField(max_length=300, null=True, blank=True, unique=True)
-    email = models.CharField(max_length=300, null=True, blank=True, unique=True)
+    username = models.CharField(
+        max_length=300, null=True, blank=True, unique=True)
+    email = models.CharField(max_length=300, null=True,
+                             blank=True, unique=True)
 
-    pass 
+    pass
 
     def __str__(self):
         return self.username
 
     def saveToUserDatabase(self):
         self.save()
-    
+
 
 class Filter(models.Model):
     age = models.CharField(max_length=300)
@@ -57,23 +60,29 @@ class Filter(models.Model):
 
     def getUserInstance(self):
         userInstance = User.objects.get(email=self.email)
-        return userInstance 
+        return userInstance
 
-    def parsingFunc(self, string1):
+    def parseIfBeginWithNum(self, string):
+        for x in string:
+            indexAt = x.find(":")
+            # This if will catch the ValueError: substring not found. Arrays are parsed correctly but when items are separated by only one '\n' then
+            # extra index at the front of the array and at the last element. They are empty strings and do not contain ":". Since the .find() will return a -1
+            # if not found, then it will not append the blank strings.
+            if (indexAt != -1):
+                self.item_title_array.append(x[0:indexAt])
+                self.item_descrip_array.append(x[indexAt+2:])
 
-        # Clears string and arrays each time we send a POST and GET a request back from OpenAI
-        self.item_descrip_string = ""
-        self.item_title_string = ""
-        self.openai_descrip_string = ""
-        self.item_descrip_array = []
-        self.item_title_array = []
-        self.openai_descrip_array = []
+        # Remove leading white space on item 10. Keep line if items is 10 or more
+        if len(self.item_title_array) >= 10:
+            self.item_title_array[len(
+                self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
+    def parseIfBeginNormal(self, string):
         # Parsed output_text response to initial array that will be used for further parsing
-        if (string1.count("\n\n") >= 3):
-            parsedArray = str(string1).split("\n\n")
+        if (string.count("\n\n") >= 3):
+            parsedArray = str(string).split("\n\n")
         else:
-            parsedArray = str(string1).split("\n")
+            parsedArray = str(string).split("\n")
         # Parsed array length
         parsedArrayLen = len(parsedArray)
         items_and_descrip_Array = []
@@ -106,12 +115,26 @@ class Filter(models.Model):
             self.item_title_array[len(
                 self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
-        # Join all elements of parsed arrays into separate strings to have ready to pass over to front end.
-        self.item_title_string = ", ".join(self.item_title_array)
-        # The * seperates each description, and allows us to parse each description to its own response card
-        self.item_descrip_string = "*".join(self.item_descrip_array)
-        self.openai_descrip_string = ",".join(self.openai_descrip_array)
+    def parsingFunc(self, string1):
 
+        # Clears string and arrays each time we send a POST and GET a request back from OpenAI
+        self.item_descrip_string = ""
+        self.item_title_string = ""
+        self.openai_descrip_string = ""
+        self.item_descrip_array = []
+        self.item_title_array = []
+        self.openai_descrip_array = []
+
+        if string1[0] == '1':
+            self.parseIfBeginWithNum(string1)
+        else:
+            self.parseIfBeginNormal(string1)
+
+    def clearAsterisk(self, string):
+        if string.count("**") >= 1:
+            string.replace("**", "")
+        elif string.count("*") >= 1:
+            string.replace("*", "")
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
@@ -132,6 +155,8 @@ class Filter(models.Model):
 
         self.output_text = response.choices[0].message.content
         self.parsingFunc(self.output_text)
+        if self.item_title_string.count("**") >= 1 or self.item_title_string.count("*") >= 1:
+            self.clearAsterisk(self.item_title_string)
         userInstance = User.objects.get(email=self.email)
         self.user = userInstance
         self.save()
