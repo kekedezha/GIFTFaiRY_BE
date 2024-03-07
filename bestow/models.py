@@ -145,9 +145,9 @@ class Filter(models.Model):
 
     def clearAsterisk(self, string):
         if string.count("**") >= 1:
-            string.replace("**", "")
+            string=string.replace("**", "")
         elif string.count("*") >= 1:
-            string.replace("*", "")
+            string=string.replace("*", "")
 
 
     def send_filters(self):
