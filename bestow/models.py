@@ -63,6 +63,14 @@ class Filter(models.Model):
         return userInstance
 
     def parseIfBeginWithNum(self, string):
+        # Clears string and arrays each time we send a POST and GET a request back from OpenAI
+        self.item_descrip_string = ""
+        self.item_title_string = ""
+        self.openai_descrip_string = ""
+        self.item_descrip_array = []
+        self.item_title_array = []
+        self.openai_descrip_array = []
+
         for x in string:
             indexAt = x.find(":")
             # This if will catch the ValueError: substring not found. Arrays are parsed correctly but when items are separated by only one '\n' then
@@ -78,6 +86,14 @@ class Filter(models.Model):
                 self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
     def parseIfBeginNormal(self, string):
+        # Clears string and arrays each time we send a POST and GET a request back from OpenAI
+        self.item_descrip_string = ""
+        self.item_title_string = ""
+        self.openai_descrip_string = ""
+        self.item_descrip_array = []
+        self.item_title_array = []
+        self.openai_descrip_array = []
+
         # Parsed output_text response to initial array that will be used for further parsing
         if (string.count("\n\n") >= 3):
             parsedArray = str(string).split("\n\n")
@@ -115,23 +131,6 @@ class Filter(models.Model):
             self.item_title_array[len(
                 self.item_title_array)-1] = self.item_title_array[len(self.item_title_array)-1].lstrip(" ")
 
-    def parsingFunc(self, string1):
-
-        # Clears string and arrays each time we send a POST and GET a request back from OpenAI
-        self.item_descrip_string = ""
-        self.item_title_string = ""
-        self.openai_descrip_string = ""
-        self.item_descrip_array = []
-        self.item_title_array = []
-        self.openai_descrip_array = []
-
-        if string1[0] == '1':
-            print("Parsing with method 'parseIfBeginWithNum'")
-            self.parseIfBeginWithNum(string1)
-        else:
-            print("Parsing output_text normally.")
-            self.parseIfBeginNormal(string1)
-
     def clearAsterisk(self, string):
         if string.count("**") >= 1:
             string.replace("**", "")
@@ -156,7 +155,17 @@ class Filter(models.Model):
         )
 
         self.output_text = response.choices[0].message.content
-        self.parsingFunc(self.output_text)
+
+        # if the response we get back from OpenAI beings with "1. ... 2..." then parse with the following method
+        if (self.output_text[0] == '1'):
+            print("Parsing with 'parseIfBeginWithNum' method")
+            self.parseIfBeginWithNum(self.output_text)
+        # Else if the response we get back from OpenAI beings with "Based on..." or some other text then parse normally
+        else:
+            print("Parsing normally")
+            self.parseIfBeginNormal(self.output_text)
+
+        # If the Item Title String contains any asterisks then parse the strings and take out the asterisks
         if self.item_title_string.count("**") >= 1 or self.item_title_string.count("*") >= 1:
             self.clearAsterisk(self.item_title_string)
 
