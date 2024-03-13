@@ -180,7 +180,9 @@ class Filter(models.Model):
         # Loop through item_descrip_array
         for description in itemDescriptionArray:
             # Append sentence to array to be returned.
-            returnedArray.append(description.split(".")[0])
+            description = description.split(".")[0]
+            description += "."
+            returnedArray.append(description)
 
         # Return array
         return returnedArray
