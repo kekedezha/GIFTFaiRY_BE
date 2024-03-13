@@ -148,6 +148,9 @@ class Filter(models.Model):
                 self.item_title_array.append(x[0:indexAt])
                 self.item_descrip_array.append(x[indexAt+2:])
 
+        # Reduce all item descriptions to only one sentence.
+        self.itemDescriptionParse(self.item_descrip_array)
+
         # Remove leading white space on item 10. Keep line if items is 10 or more
         if len(self.item_title_array) >= 10:
             self.item_title_array[len(
@@ -155,15 +158,24 @@ class Filter(models.Model):
 
         # Join all elements of parsed arrays into separate strings to have ready to pass over to front end.
         self.item_title_string = ", ".join(self.item_title_array)
-        # The * seperates each description, and allows us to parse each description to its own response card
+        # The * separates each description, and allows us to parse each description to its own response card
         self.item_descrip_string = "*".join(self.item_descrip_array)
         self.openai_descrip_string = ",".join(self.openai_descrip_array)
 
+    # Function to clear asterisks in item title
     def clearAsterisk(self, string):
         if string.count("**") >= 1:
             self.item_title_string = string.replace("**", "")
         elif string.count("*") >= 1:
             self.item_title_string = string.replace("*", "")
+
+    # Function to limit item description to one sentence for better visualization in UI
+    def itemDescriptionParse(self, itemDescriptionArray):
+        # Loop through item_descrip_array
+        for description in itemDescriptionArray:
+            #
+            description = description.split(".")[0]
+            print(description)
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
@@ -199,8 +211,6 @@ class Filter(models.Model):
         if self.item_title_string.count("**") >= 1 or self.item_title_string.count("*") >= 1:
             self.clearAsterisk(self.item_title_string)
 
-        print(self.item_descrip_string)
-        print(self.item_title_string)
         userInstance = User.objects.get(email=self.email)
         self.user = userInstance
         self.save()
