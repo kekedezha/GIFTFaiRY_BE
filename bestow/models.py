@@ -94,6 +94,9 @@ class Filter(models.Model):
                 self.item_title_array.append(x[0:indexAt])
                 self.item_descrip_array.append(x[indexAt+2:])
 
+                # Reduce all item descriptions to only one sentence.
+        self.itemDescriptionParse(self.item_descrip_array)
+
         # Remove leading white space on item 10. Keep line if items is 10 or more
         if len(self.item_title_array) >= 10:
             self.item_title_array[len(
