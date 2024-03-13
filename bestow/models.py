@@ -95,7 +95,8 @@ class Filter(models.Model):
                 self.item_descrip_array.append(x[indexAt+2:])
 
                 # Reduce all item descriptions to only one sentence.
-        self.itemDescriptionParse(self.item_descrip_array)
+            self.item_descrip_array = self.itemDescriptionParse(
+                self.item_descrip_array)
 
         # Remove leading white space on item 10. Keep line if items is 10 or more
         if len(self.item_title_array) >= 10:
@@ -174,11 +175,15 @@ class Filter(models.Model):
 
     # Function to limit item description to one sentence for better visualization in UI
     def itemDescriptionParse(self, itemDescriptionArray):
+        # Create an empty array that will hold one sentence for each item
+        returnedArray = []
         # Loop through item_descrip_array
         for description in itemDescriptionArray:
-            #
-            description = description.split(".")[0]
-            print(description)
+            # Append sentence to array to be returned.
+            returnedArray.append(description.split(".")[0])
+
+        # Return array
+        return returnedArray
 
     def send_filters(self):
         # Load environment variables from a .env file in the current directory
