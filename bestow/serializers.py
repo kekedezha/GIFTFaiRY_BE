@@ -1,20 +1,24 @@
 from rest_framework import serializers
-from .models import(
+from .models import (
     User,
     Filter,
 )
+
 
 class UserPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
 
+
 class UserGetSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
             "first_name",
+            "email"
         ]
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,10 +28,12 @@ class ProfileSerializer(serializers.ModelSerializer):
             'username',
         ]
 
+
 class FilterPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Filter
         fields = "__all__"
+
 
 class FilterGetSerializer(serializers.ModelSerializer):
     class Meta:
