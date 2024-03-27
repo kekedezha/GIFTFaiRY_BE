@@ -49,4 +49,4 @@ Each part of this project helped me understand more about building apps, managin
 ## 🫱🏼‍🫲🏽 Contributing 
 - [Theodore Thibodeau](https://github.com/TheoThibodeau)
 - [Kimberly Rivas](https://github.com/rivkj)
-- We are also open to contributions from others! Please contact us at [dezhac6@gmail.com](mailto:dezha6@gmail.com) or [teddst1@gmail.com](mailto:teddst1@gmail.com).
+- We are also open to contributions from others! Please contact us at [dezhac6@gmail.com](mailto:dezha6@gmail.com) or [teddythibodeau@gmail.com](mailto:teddythibodeau@gmail.com).
