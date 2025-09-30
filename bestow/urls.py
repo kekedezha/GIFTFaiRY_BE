@@ -7,9 +7,9 @@ urlpatterns = [
 
     #User Database
     path('api/user/generate', views.UserPostViewSet.as_view(), name="user-post"),
-    path('api/user/response/<str:email>/', views.UserGetViewSet.as_view(), name="user-get"),
+    path('api/user/response/<path:email>/', views.UserGetViewSet.as_view(), name="user-get"),
 
     # Filtering 
     path('api/filter/generate', views.FilterPostViewSet.as_view(), name="filter-post"),
-    path('api/filter/response/<str:email>/', views.FilterGetViewSet.as_view(), name="filter-get"),
+    path('api/filter/response/<path:email>/', views.FilterGetViewSet.as_view(), name="filter-get"),
 ]
